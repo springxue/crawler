@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.casic.jd.dao.ItemDao">
+    <sql id="dynamicWhere">
+        <where>
+            <if test="id!='' and id!=null">
+                and id=#{id}
+            </if>
+            <if test="spu!='' and spu!=null">
+                and  spu=#{spu}
+            </if>
+            <if test="sku!='' and sku!=null">
+                and  sku=#{sku}
+            </if>
+
+            <if test="title!='' and title!=null">
+                and  title=#{title}
+            </if>
+            <if test="price!='' and price!=null">
+                and price=#{price}
+            </if>
+            <if test="pic!='' and pic!=null">
+                and pic=#{pic}
+            </if>
+            <if test="url!='' and url!=null">
+                and url=#{url}
+            </if>
+
+        </where>
+    </sql>
+    <insert id="save" parameterType="com.casic.jd.bean.Item">
+        insert into jd_item (spu, sku, title, price, pic, url, created, )
+         values (#{spu},#{sku},#{title},#{price},#{pic},#{url},#{created})
+    </insert>
+    <select id="findAll" resultType="com.casic.jd.bean.Item">
+        select * from jd_item
+       <include refid="dynamicWhere"/>
+
+    </select>
+</mapper>
