@@ -106,7 +106,7 @@ public class HttpUtils {
                     String picName= UUID.randomUUID().toString()+extName;
                     //下载图片
                     //声明OutPutStream
-                    OutputStream outputStream=new FileOutputStream(new File("G:\\pictures\\"+picName));
+                    OutputStream outputStream=new FileOutputStream(new File("E:\\pictures\\"+picName));
                     response.getEntity().writeTo(outputStream);
                     return picName;
                 }

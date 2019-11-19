@@ -31,8 +31,7 @@
         </where>
     </sql>
     <insert id="save" parameterType="com.casic.jd.bean.Item">
-        insert into jd_item (spu, sku, title, price, pic, url, created, )
-         values (#{spu},#{sku},#{title},#{price},#{pic},#{url},#{created})
+        insert into jd_item (spu, sku, title, price, pic, url, created) values (#{spu},#{sku},#{title},#{price},#{pic},#{url},#{created})
     </insert>
     <select id="findAll" resultType="com.casic.jd.bean.Item">
         select * from jd_item

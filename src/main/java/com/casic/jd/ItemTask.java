@@ -65,7 +65,12 @@ public class ItemTask {
                   String itemUrl="https://item.jd.com/"+sku+".html";
                   item.setUrl(itemUrl);
                   //获取商品的图片
-                  String picUrl="https:"+skuElement.attr("data-lazy-img");
+                  String picUrl="";
+                  if("".endsWith(skuElement.attr("data-lazy-img"))){
+                       picUrl="https:"+skuElement.attr("data-lazy-img-slave");
+                  }else {
+                       picUrl="https:"+skuElement.attr("data-lazy-img");
+                  }
                   picUrl=picUrl.replace("n9","n1");
                   String picName=httpUtils.doGetImg(picUrl);
                   item.setPic(picName);
