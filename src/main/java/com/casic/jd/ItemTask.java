@@ -3,6 +3,7 @@ package com.casic.jd;
 import com.casic.jd.bean.Item;
 import com.casic.jd.dao.ItemDao;
 import com.casic.jd.utils.HttpUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -20,6 +21,8 @@ public class ItemTask {
     private HttpUtils httpUtils;
     @Autowired
     private ItemDao itemDao;
+    private static final ObjectMapper MAPPER=new ObjectMapper();
+
     //当下载任务完成后，间隔多长时间进行下一次的任务
     @Scheduled(fixedDelay = 100*1000)
     public void itemTask() throws Exception{
@@ -75,9 +78,15 @@ public class ItemTask {
                   String picName=httpUtils.doGetImg(picUrl);
                   item.setPic(picName);
 //                  //获取商品的价格
+                  String priceUrl="https://p.3.cn/prices/mgets?skuIds=J_"+sku;
+                  String priceJson=httpUtils.doGetHtml(priceUrl);
+                  double price = MAPPER.readTree(priceJson).get(0).get("p").asDouble();
+                  item.setPrice(price);
 
-//                  item.setPrice();
-//                  item.setTitle();
+                  //获取商品的标题
+                  String detailPage=httpUtils.doGetHtml(itemUrl);
+                  String title=Jsoup.parse(detailPage).getElementsByClass("sku-name").first().text();
+                  item.setTitle(title);
                   item.setCreated(new Date());
                   itemDao.save(item);
               }
