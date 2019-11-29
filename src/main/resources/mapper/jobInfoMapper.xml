@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.casic.webMagic.test.dao">
+        <insert id="save" parameterType="com.casic.jd.bean.JobInfo">
+            insert into job_info (company_name, company_addr, company_info, job_name, job_addr, job_info, salary_min, salary_max, url, time)
+            values (#{companyName},#{companyAddr},#{companyInfo},#{jobName},#{jobAddr},#{jobInfo},#{salaryMin},#{salaryMax},#{url},#{time})
+        </insert>
+        <select id="findAll" resultType="com.casic.jd.bean.JobInfo">
+            select * from job_info
+            <where>
+                <if test="id !=null and id!=''">
+                    and id=#{id}
+                </if>
+
+            </where>
+        </select>
+    <update id="update">
+        update job_info
+        <set>
+            company_name=#{companyName},
+            company_addr=#{companyAddr},
+            company_info=#{companyInfo},
+            job_name=#{jobName},
+            job_addr=#{jobAddr},
+            job_info=#{jobInfo},
+            salary_min=#{salaryMin},
+            salary_max=#{salaryMax},
+            url=#{url},
+            time=#{time}
+        </set>
+    </update>
+</mapper>
